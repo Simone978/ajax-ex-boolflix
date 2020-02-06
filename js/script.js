@@ -22,12 +22,24 @@ $.ajax(
       },
   success: function (data) {
     var dati = data.results;
+
+    var source = $('#movies_data').html();
+    var template = Handlebars.compile(source);
+
     for (var i = 0; i < dati.length; i++) {
       var film = dati[i];
-      console.log(film.title);
-      console.log(film.original_title);
-      console.log(film.original_language);
-      console.log(film.vote_average);
+      // console.log(film.title);
+      // console.log(film.original_title);
+      // console.log(film.original_language);
+      // console.log(film.vote_average);
+      var context = {
+         title: film.title,
+         original_title: film.original_title,
+         original_language: film.original_language,
+         vote_average: film.vote_average
+       };
+       var html = template(context);
+       $('.movie_list').append(html);
     }
     },
   error: function (richiesta, stato, errori) {
