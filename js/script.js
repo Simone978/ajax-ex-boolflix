@@ -48,12 +48,13 @@ function print(dati){
 
   for (var i = 0; i < dati.length; i++) {
     var film = dati[i];
-    var context = {
-       title: film.title,
-       original_title: film.original_title,
-       original_language: film.original_language,
-       vote_average: film.vote_average
-     };
+    var context = film;
+    // var context = {
+    //    title: film.title,
+    //    original_title: film.original_title,
+    //    original_language: film.original_language,
+    //    vote_average: film.vote_average
+    //  };
      var html = template(context);
      $('.movie_list').append(html);
   }
