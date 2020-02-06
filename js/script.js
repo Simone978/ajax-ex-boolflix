@@ -10,6 +10,7 @@
 
 $(document).ready(function(){
   $('.search').click(function(){
+    $('.movie_list').html('');
     var titolo = $("#string").val();
     console.log(titolo);
     // chiamata ajax
