@@ -6,3 +6,32 @@
 // Voto
 
 // 07e3257a7ad00294a8c003683909f65c
+//https://api.themoviedb.org/3/search/movie
+
+
+var titolo = 'ritorno al futuro';
+
+$.ajax(
+  {
+  url: "https://api.themoviedb.org/3/search/movie",
+  method: "GET",
+  data: {
+        api_key: "07e3257a7ad00294a8c003683909f65c",
+        query: titolo,
+        language: "it"
+      },
+  success: function (data) {
+    var dati = data.results;
+    for (var i = 0; i < dati.length; i++) {
+      var film = dati[i];
+      console.log(film.title);
+      console.log(film.original_title);
+      console.log(film.original_language);
+      console.log(film.vote_average);
+    }
+    },
+  error: function (richiesta, stato, errori) {
+    alert("E' avvenuto un errore. " + errori);
+    }
+  }
+);
