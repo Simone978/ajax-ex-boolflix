@@ -8,42 +8,41 @@
 // 07e3257a7ad00294a8c003683909f65c
 //https://api.themoviedb.org/3/search/movie
 
+$('.search').click(function(){
+  var titolo = $("#string").val();
+  console.log(titolo);
+  // chiamata ajax
+  $.ajax(
+    {
+    url: "https://api.themoviedb.org/3/search/movie",
+    method: "GET",
+    data: {
+          api_key: "07e3257a7ad00294a8c003683909f65c",
+          query: titolo,
+          language: "it"
+        },
+    success: function (data) {
+      var dati = data.results;
 
-var titolo = 'ritorno al futuro';
+      var source = $('#movies_data').html();
+      var template = Handlebars.compile(source);
 
-$.ajax(
-  {
-  url: "https://api.themoviedb.org/3/search/movie",
-  method: "GET",
-  data: {
-        api_key: "07e3257a7ad00294a8c003683909f65c",
-        query: titolo,
-        language: "it"
+      for (var i = 0; i < dati.length; i++) {
+        var film = dati[i];
+        var context = {
+           title: film.title,
+           original_title: film.original_title,
+           original_language: film.original_language,
+           vote_average: film.vote_average
+         };
+         var html = template(context);
+         $('.movie_list').append(html);
+      }
       },
-  success: function (data) {
-    var dati = data.results;
-
-    var source = $('#movies_data').html();
-    var template = Handlebars.compile(source);
-
-    for (var i = 0; i < dati.length; i++) {
-      var film = dati[i];
-      // console.log(film.title);
-      // console.log(film.original_title);
-      // console.log(film.original_language);
-      // console.log(film.vote_average);
-      var context = {
-         title: film.title,
-         original_title: film.original_title,
-         original_language: film.original_language,
-         vote_average: film.vote_average
-       };
-       var html = template(context);
-       $('.movie_list').append(html);
+    error: function (richiesta, stato, errori) {
+      alert("E' avvenuto un errore. " + errori);
+      }
     }
-    },
-  error: function (richiesta, stato, errori) {
-    alert("E' avvenuto un errore. " + errori);
-    }
-  }
-);
+  );
+
+});
