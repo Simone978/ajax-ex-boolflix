@@ -25,8 +25,11 @@ $(document).ready(function(){
           },
       success: function (data) {
         var dati = data.results;
+        if(!dati.length==0){
         print(dati);
-
+      }else{
+        alert('questa ricerca non ha prodotto risultati');
+      }
         },
       error: function (richiesta, stato, errori) {
         alert("E' avvenuto un errore. " + errori);
