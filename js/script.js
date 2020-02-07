@@ -67,13 +67,24 @@ function print(dati){
     var film = dati[i];
     var context = film;
     var voti = Math.ceil(film.vote_average);
-    console.log(voti);
-    // var context = {
-    //    title: film.title,
-    //    original_title: film.original_title,
-    //    original_language: film.original_language,
-    //    vote_average: film.vote_average
-    //  };
+    var votiToFive = 0;
+    if(voti == 1 || voti == 2){
+      votiToFive = 1;
+    }else if(voti == 3 || voti == 4){
+      votiToFive = 2;
+    }else if(voti == 5 || voti == 6){
+      votiToFive = 3;
+    }else if(voti == 7 || voti == 8){
+      votiToFive = 4;
+    }else if(voti == 9 || voti == 10){
+      votiToFive = 5;
+    }
+    var context = {
+       title: film.title,
+       original_title: film.original_title,
+       original_language: film.original_language,
+       vote_average: votiToFive
+     };
      var html = template(context);
      $('.movie_list').append(html);
   }
