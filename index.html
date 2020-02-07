@@ -14,7 +14,13 @@
 
 
     <script id="movies_data" type="text/x-handlebars-template">
-      <li>{{title}}-{{original_title}}-{{original_language}}-{{vote_average}}</li>
+      <li>{{title}}
+        <ul>
+          <li>Titolo originale: {{original_title}}</li>
+          <li>Lingua originale: {{original_language}}</li>
+          <li>Voto: {{vote_average}}</li>
+        </ul>
+      </li>
 
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js" integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU=" crossorigin="anonymous"></script>
