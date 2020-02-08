@@ -49,7 +49,7 @@ function movieData(string){
       if(!dati.length==0){
       print(dati);
     }else{
-      alert('questa ricerca non ha prodotto risultati');
+      alert('Non ci sono film corrispondenti');
     }
       },
     error: function (richiesta, stato, errori) {
@@ -76,7 +76,7 @@ function serieTvData(string){
       if(!dati.length==0){
       print(dati);
     }else{
-      alert('questa ricerca non ha prodotto risultati');
+      alert('Non ci sono serie tv corrispondenti');
     }
       },
     error: function (richiesta, stato, errori) {
@@ -116,7 +116,6 @@ function print(dati){
   for (var j = 0; j < dati.length; j++) {
     var film = dati[j];
     var context = film;
-    var title = film.original_name;
     var votazione = film.vote_average / 2;
     var voti = Math.ceil(votazione);
     console.log(film.original_name);
@@ -126,6 +125,8 @@ function print(dati){
     }
 
     var context = {
+      title: film.title,
+      name: film.name,
       original_title: film.original_title,
       original_name: film.original_name,
       original_language: film.original_language,
