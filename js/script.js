@@ -8,10 +8,13 @@
 // Trasformiamo il voto da 1 a 10 decimale in un numero intero da 1 a 5, così da permetterci di stampare a schermo un numero di stelle piene che vanno da 1 a 5, lasciando le restanti vuote (troviamo le icone in FontAwesome).
 // Arrotondiamo sempre per eccesso all’unità successiva, non gestiamo icone mezze piene
 
+// Trasformiamo poi la stringa statica della lingua in una vera e propria bandiera della nazione corrispondente, gestendo il caso in cui non abbiamo la bandiera della nazione ritornata dall’API (le flag non ci sono in FontAwesome).
+
 // 07e3257a7ad00294a8c003683909f65c
 //https://api.themoviedb.org/3/search/movie
 
 $(document).ready(function(){
+
   $('.search').click(function(){
 
     reset_list();
@@ -21,6 +24,7 @@ $(document).ready(function(){
     movieData(titolo);
 
   });
+
 });
 
 // Funzioni
@@ -59,31 +63,42 @@ function resetString(){
   $('#string').val('');
 };
 
+function printStars(votiFilm){
+  var somma= '';
+  for (var i = 0; i < 5; i++) {
+    if ( i < votiFilm) {
+      var risultato = '<i class="fas fa-star yellow"></i>';
+    } else {
+      var risultato = '<i class="far fa-star yellow"></i>';
+    }
+    somma += risultato;
+  }
+  return somma;
+}
+
+
 function print(dati){
   var source = $('#movies_data').html();
   var template = Handlebars.compile(source);
 
-  for (var i = 0; i < dati.length; i++) {
-    var film = dati[i];
+  for (var j = 0; j < dati.length; j++) {
+    var film = dati[j];
     var context = film;
-    var voti = Math.ceil(film.vote_average);
-    var votiToFive = 0;
-    if(voti == 1 || voti == 2){
-      votiToFive = 1;
-    }else if(voti == 3 || voti == 4){
-      votiToFive = 2;
-    }else if(voti == 5 || voti == 6){
-      votiToFive = 3;
-    }else if(voti == 7 || voti == 8){
-      votiToFive = 4;
-    }else if(voti == 9 || voti == 10){
-      votiToFive = 5;
+    var votazione = film.vote_average / 2;
+    var voti = Math.ceil(votazione);
+    console.log(voti);
+    var flag = film.original_language;
+    if (flag != "it" && flag != "en" && flag != "fr") {
+      flag = "";
     }
+
     var context = {
        title: film.title,
        original_title: film.original_title,
        original_language: film.original_language,
-       vote_average: votiToFive
+       flag: flag,
+       vote_average: voti,
+       stars: printStars(voti)
      };
      var html = template(context);
      $('.movie_list').append(html);

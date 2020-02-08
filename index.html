@@ -2,13 +2,14 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css">
     <title></title>
   </head>
   <body>
     <input id="string" type="text" placeholder="cerca il tuo film" value="">
     <button class='search'>search</button>
     <ul class="movie_list">
-
     </ul>
 
 
@@ -17,12 +18,19 @@
       <li>{{title}}
         <ul>
           <li>Titolo originale: {{original_title}}</li>
-          <li>Lingua originale: {{original_language}}</li>
-          <li>Voto: {{vote_average}}</li>
+          <li>Lingua originale: {{original_language}}
+            <img class='flag_space' src="img/{{flag}}.jpg" alt=""/>
+          </li>
+          <li class="voto">Voto: {{vote_average}} {{{stars}}}</li>
+        </h4>
         </ul>
       </li>
-
   </script>
+
+    <script id="stars" type="text/x-handlebars-template">
+      <i class="star fas fa-star {{numero}}"></i>
+    </script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js" integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU=" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="js/script.js" charset="utf-8"></script>
