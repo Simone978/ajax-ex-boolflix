@@ -123,10 +123,15 @@ function print(dati){
     if (flag != "it" && flag != "en" && flag != "fr") {
       flag = "";
     }
-
+    // img/noimage.jpg
+// https://image.tmdb.org/t/p/w342"+ film.poster_path
+    var posterMovie = "img/noimage.jpg";
+    if(film.poster_path != null){
+      posterMovie = "https://image.tmdb.org/t/p/w342"+ film.poster_path;
+    }
     var context = {
       title: film.title,
-      poster: "https://image.tmdb.org/t/p/w342"+ film.poster_path,
+      poster: posterMovie,
       name: film.name,
       original_title: film.original_title,
       original_name: film.original_name,
