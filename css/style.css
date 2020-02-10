@@ -2,11 +2,15 @@
   color: yellow;
 }
 
-.movie_list {
+.movie_list, .tv_list {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
 }
+.movie_list li, .tv_list li {
+  width: 350px;
+}
+
 
 .movies {
   margin-bottom: 20px;
@@ -22,4 +26,8 @@ li {
 
 .title span {
   font-weight: bold;
+}
+
+.noimg {
+  width: 342px;
 }

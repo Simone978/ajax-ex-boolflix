@@ -25,8 +25,8 @@ $(document).ready(function(){
     var titolo = $("#string").val();
     console.log(titolo);
     // chiamata ajax
-    movieData(titolo);
-    serieTvData(titolo);
+    movieData("movie", titolo);
+    serieTvData("tv", titolo);
 
   });
 
@@ -34,7 +34,12 @@ $(document).ready(function(){
 
 // Funzioni
 
-function movieData(string){
+function reset_list(){
+  $('.movie_list').html('');
+  $('.tv_list').html('');
+}
+
+function movieData(type, string){
   $.ajax(
     {
     url: "https://api.themoviedb.org/3/search/movie",
@@ -47,7 +52,7 @@ function movieData(string){
     success: function (data) {
       var dati = data.results;
       if(!dati.length==0){
-      print(dati);
+      print(type, dati);
 
     }else{
       alert('Non ci sono film corrispondenti');
@@ -61,10 +66,7 @@ function movieData(string){
   resetString();
 };
 
-function reset_list(){
-  $('.movie_list').html('');
-}
-function serieTvData(string){
+function serieTvData(type, string){
   $.ajax(
     {
     url: "https://api.themoviedb.org/3/search/tv",
@@ -78,7 +80,7 @@ function serieTvData(string){
       console.log(data);
       var dati = data.results;
       if(!dati.length==0){
-      print(dati);
+      print(type, dati);
     }else{
       alert('Non ci sono serie tv corrispondenti');
     }
@@ -110,7 +112,8 @@ function printStars(votiFilm){
 }
 
 
-function print(dati){
+function print(type, dati){
+ console.log(type);
   var source = $('#movies_data').html();
   var template = Handlebars.compile(source);
 
@@ -123,11 +126,16 @@ function print(dati){
     if (flag != "it" && flag != "en" && flag != "fr") {
       flag = "";
     }
-    // img/noimage.jpg
-// https://image.tmdb.org/t/p/w342"+ film.poster_path
-    var posterMovie = "img/noimage.jpg";
+
+    var container = "";
+    if(type == "movie"){
+      container = $('.movie_list');
+    }else{
+      container = $('.tv_list');
+    }
+    var posterMovie = '<img class="noimg" src="img/noimage.jpg" alt=""/>';
     if(film.poster_path != null){
-      posterMovie = "https://image.tmdb.org/t/p/w342"+ film.poster_path;
+      posterMovie = "<img src='https://image.tmdb.org/t/p/w342"+film.poster_path+"'>";
     }
     var context = {
       title: film.title,
@@ -138,9 +146,10 @@ function print(dati){
       original_language: film.original_language,
       flag: flag,
       vote_average: voti,
-      stars: printStars(voti)
+      stars: printStars(voti),
+      tipo: type
      };
      var html = template(context);
-     $('.movie_list').append(html);
+     container.append(html);
   }
 }
