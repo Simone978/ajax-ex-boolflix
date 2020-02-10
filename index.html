@@ -7,28 +7,41 @@
     <title></title>
   </head>
   <body>
-    <input id="string" type="text" placeholder="cerca il tuo film" value="">
-    <button class='search'>search</button>
-    <ul class="movie_list">
-    </ul>
-    <ul class="tv_list">
-    </ul>
-
+    <header>
+      <h2>Boolflix</h2>
+      <div class="searchbox">
+        <input id="string" type="text" placeholder="cerca il tuo film" value="">
+        <button class='search'>search</button>
+      </div>
+    </header>
+    <main>
+      <div class="wrapper">
+        <div class="movie_list">
+        </div>
+        <div class="tv_list">
+        </div>
+      </div>
+    </main>
 
 
     <script id="movies_data" type="text/x-handlebars-template">
-      <li class="title"><span>{{title}} {{name}}</span>
-        <ul class="movies">
-          <li class="poster">{{{poster}}}</li>
-          <li>Titolo originale: {{original_title}} {{original_name}}</li>
-          <li>Lingua originale: {{original_language}}
-            <img class='flag_space' src="img/{{flag}}.jpg" alt=""/>
-          </li>
-          <li class="voto">Voto: {{vote_average}} {{{stars}}}</li>
-          <li>{{tipo}}</li>
-        </ul>
-      </li>
-  </script>
+      <div class="container">
+        <div class="movies">
+          <div class="movies_container">
+            <div class="poster">{{{poster}}}</div>
+            <h2 class="title"><span>{{title}} {{name}}</span></h2>
+            <h3>Titolo originale: {{original_title}} {{original_name}}</h3>
+            <p>Lingua originale: {{original_language}}
+              <img class='flag_space' src="img/{{flag}}.jpg" alt=""/>
+            </p>
+            <p class="voto">Voto: {{vote_average}} {{{stars}}}</p>
+            <p>{{riassunto}}</p>
+            <p>{{tipo}}</p>
+          </div>
+        </div>
+      </div>
+
+    </script>
 
     <script id="stars" type="text/x-handlebars-template">
       <i class="star fas fa-star {{numero}}"></i>

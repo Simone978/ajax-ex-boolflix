@@ -25,10 +25,15 @@ $(document).ready(function(){
     var titolo = $("#string").val();
     console.log(titolo);
     // chiamata ajax
-    movieData("movie", titolo);
-    serieTvData("tv", titolo);
+    movieData("film", titolo);
+    serieTvData("serie tv", titolo);
 
   });
+//   $(document).on('hover','.poster',function() {
+//   $( this ).fadeOut( 100 );
+//   $( this ).fadeIn( 500 );
+// });
+
 
 });
 
@@ -128,7 +133,7 @@ function print(type, dati){
     }
 
     var container = "";
-    if(type == "movie"){
+    if(type == "film"){
       container = $('.movie_list');
     }else{
       container = $('.tv_list');
@@ -137,6 +142,11 @@ function print(type, dati){
     if(film.poster_path != null){
       posterMovie = "<img src='https://image.tmdb.org/t/p/w342"+film.poster_path+"'>";
     }
+    var riassunto = film.overview;
+    if(riassunto.length > 200){
+      riassunto = riassunto.substr(0,200);
+    }
+    console.log(riassunto.length);
     var context = {
       title: film.title,
       poster: posterMovie,
@@ -147,6 +157,7 @@ function print(type, dati){
       flag: flag,
       vote_average: voti,
       stars: printStars(voti),
+      riassunto: riassunto + '...',
       tipo: type
      };
      var html = template(context);
