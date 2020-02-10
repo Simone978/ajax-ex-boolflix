@@ -48,6 +48,7 @@ function movieData(string){
       var dati = data.results;
       if(!dati.length==0){
       print(dati);
+
     }else{
       alert('Non ci sono film corrispondenti');
     }
@@ -60,6 +61,9 @@ function movieData(string){
   resetString();
 };
 
+function reset_list(){
+  $('.movie_list').html('');
+}
 function serieTvData(string){
   $.ajax(
     {
@@ -87,9 +91,6 @@ function serieTvData(string){
   resetString();
 };
 
-function reset_list(){
-  $('.movie_list').html('');
-}
 
 function resetString(){
   $('#string').val('');
@@ -118,7 +119,6 @@ function print(dati){
     var context = film;
     var votazione = film.vote_average / 2;
     var voti = Math.ceil(votazione);
-    console.log(film.original_name);
     var flag = film.original_language;
     if (flag != "it" && flag != "en" && flag != "fr") {
       flag = "";
@@ -126,6 +126,7 @@ function print(dati){
 
     var context = {
       title: film.title,
+      poster: "https://image.tmdb.org/t/p/w342"+ film.poster_path,
       name: film.name,
       original_title: film.original_title,
       original_name: film.original_name,

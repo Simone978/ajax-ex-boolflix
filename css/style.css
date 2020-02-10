@@ -2,10 +2,16 @@
   color: yellow;
 }
 
+.movie_list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 .movies {
   margin-bottom: 20px;
 }
-img {
+img.flag_space {
   height:20px;
   vertical-align: middle;
 }
