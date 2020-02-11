@@ -23,17 +23,14 @@ $(document).ready(function(){
 
     reset_list();
     var titolo = $("#string").val();
-    console.log(titolo);
     // chiamata ajax
-    movieData("film", titolo);
-    serieTvData("serie tv", titolo);
+    var urlMovie = "https://api.themoviedb.org/3/search/movie";
+    var urlTv = "https://api.themoviedb.org/3/search/tv";
+    movieData("film", titolo, urlMovie);
+    movieData("serie tv", titolo, urlTv);
+
 
   });
-//   $(document).on('hover','.poster',function() {
-//   $( this ).fadeOut( 100 );
-//   $( this ).fadeIn( 500 );
-// });
-
 
 });
 
@@ -44,10 +41,10 @@ function reset_list(){
   $('.tv_list').html('');
 }
 
-function movieData(type, string){
+function movieData(type, string, url){
   $.ajax(
     {
-    url: "https://api.themoviedb.org/3/search/movie",
+    url: ""+url+"",
     method: "GET",
     data: {
           api_key: "07e3257a7ad00294a8c003683909f65c",
@@ -61,33 +58,6 @@ function movieData(type, string){
 
     }else{
       alert('Non ci sono film corrispondenti');
-    }
-      },
-    error: function (richiesta, stato, errori) {
-      alert("E' avvenuto un errore. " + errori);
-      }
-    }
-  );
-  resetString();
-};
-
-function serieTvData(type, string){
-  $.ajax(
-    {
-    url: "https://api.themoviedb.org/3/search/tv",
-    method: "GET",
-    data: {
-          api_key: "07e3257a7ad00294a8c003683909f65c",
-          query: string,
-          language: "it"
-        },
-    success: function (data) {
-      console.log(data);
-      var dati = data.results;
-      if(!dati.length==0){
-      print(type, dati);
-    }else{
-      alert('Non ci sono serie tv corrispondenti');
     }
       },
     error: function (richiesta, stato, errori) {
@@ -163,4 +133,29 @@ function print(type, dati){
      var html = template(context);
      container.append(html);
   }
+  // movieId(dati);
 }
+
+// function movieId(dati_cast){
+//   for (var i = 0; i < dati_cast.length; i++) {
+//     var movie_id = dati_cast[i].id;
+//     // console.log("https://api.themoviedb.org/3/search/movie"+movieId+"");
+//     $.ajax(
+//       {
+//       url: "https://api.themoviedb.org/3/movie/"+movie_id+"/credits?",
+//       method: "GET",
+//       data: {
+//             api_key: "07e3257a7ad00294a8c003683909f65c",
+//           },
+//       success: function (data) {
+//         var results = data.cast[i];
+//         console.log(results.name);
+//
+//         },
+//       error: function (richiesta, stato, errori) {
+//         alert("E' avvenuto un errore. " + errori);
+//         }
+//       }
+//     );
+//   }
+// }
