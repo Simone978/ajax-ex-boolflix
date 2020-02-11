@@ -28,8 +28,6 @@ $(document).ready(function(){
     var urlTv = "https://api.themoviedb.org/3/search/tv";
     movieData("film", titolo, urlMovie);
     movieData("serie tv", titolo, urlTv);
-
-
   });
 
 });
