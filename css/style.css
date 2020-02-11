@@ -53,7 +53,7 @@ header h2 {
 /* .poster img{
   width: 510px;
 } */
-.poster img:hover {
+.container:hover .poster img {
   display: none;
 }
 
