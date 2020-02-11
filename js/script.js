@@ -20,23 +20,34 @@
 $(document).ready(function(){
 
   $('.search').click(function(){
+    callAjax();
+  });
 
-    reset_list();
-    var titolo = $("#string").val();
-    // chiamata ajax
-    var urlMovie = "https://api.themoviedb.org/3/search/movie";
-    var urlTv = "https://api.themoviedb.org/3/search/tv";
-    movieData("film", titolo, urlMovie);
-    movieData("serie tv", titolo, urlTv);
+  $('input').keypress(function(event){
+    if(event.which == 13){
+      callAjax();
+    }
   });
 
 });
 
 // Funzioni
 
+function callAjax(){
+  reset_list();
+  var titolo = $("#string").val();
+  // chiamata ajax
+  var urlMovie = "https://api.themoviedb.org/3/search/movie";
+  var urlTv = "https://api.themoviedb.org/3/search/tv";
+  movieData("film", titolo, urlMovie);
+  movieData("serie tv", titolo, urlTv);
+}
+
 function reset_list(){
   $('.movie_list').html('');
   $('.tv_list').html('');
+  $('.no_film h2').html('');
+  $('.no_serie h2').html('');
 }
 
 function movieData(type, string, url){
@@ -54,9 +65,13 @@ function movieData(type, string, url){
       if(!dati.length==0){
       print(type, dati);
 
-    }else{
-      alert('Non ci sono film corrispondenti');
-    }
+      }else{
+        if(type == 'film'){
+        $('.no_film h2').html('Non ci sono ' + type +' corrispondenti alla tua ricerca');
+        }else{
+        $('.no_serie h2').html('Non ci sono ' + type +' corrispondenti alla tua ricerca');
+        }
+      }
       },
     error: function (richiesta, stato, errori) {
       alert("E' avvenuto un errore. " + errori);
