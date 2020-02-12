@@ -29,9 +29,16 @@ $(document).ready(function(){
     }
   });
 
+  $(document).on('click', '.cast', function(){
+    var valoreId=$(this).prev().html();
+    var results =[];
+    cast(valoreId, results);
+
+  });
 });
 
 // Funzioni
+
 
 function callAjax(){
   reset_list();
@@ -108,6 +115,7 @@ function print(type, dati){
   for (var j = 0; j < dati.length; j++) {
     var film = dati[j];
     var context = film;
+
     var votazione = film.vote_average / 2;
     var voti = Math.ceil(votazione);
     var flag = film.original_language;
@@ -129,14 +137,17 @@ function print(type, dati){
     if(riassunto.length > 200){
       riassunto = riassunto.substr(0,200);
     }
-    console.log(riassunto.length);
+    var id=film.id;
+    // movieId(id, dati);
     var context = {
+      movie_id: film.id,
       title: film.title,
       poster: posterMovie,
       name: film.name,
       original_title: film.original_title,
       original_name: film.original_name,
       original_language: film.original_language,
+      actors: '',
       flag: flag,
       vote_average: voti,
       stars: printStars(voti),
@@ -146,29 +157,26 @@ function print(type, dati){
      var html = template(context);
      container.append(html);
   }
-  // movieId(dati);
-}
+};
 
-// function movieId(dati_cast){
-//   for (var i = 0; i < dati_cast.length; i++) {
-//     var movie_id = dati_cast[i].id;
-//     // console.log("https://api.themoviedb.org/3/search/movie"+movieId+"");
-//     $.ajax(
-//       {
-//       url: "https://api.themoviedb.org/3/movie/"+movie_id+"/credits?",
-//       method: "GET",
-//       data: {
-//             api_key: "07e3257a7ad00294a8c003683909f65c",
-//           },
-//       success: function (data) {
-//         var results = data.cast[i];
-//         console.log(results.name);
-//
-//         },
-//       error: function (richiesta, stato, errori) {
-//         alert("E' avvenuto un errore. " + errori);
-//         }
-//       }
-//     );
-//   }
-// }
+function cast(val, results){
+  $.ajax(
+    {
+    url: "https://api.themoviedb.org/3/movie/"+val+"/credits",
+    method: "GET",
+    data: {
+          api_key: "07e3257a7ad00294a8c003683909f65c",
+        },
+    success: function (data) {
+     for (var i = 0; i < 5; i++) {
+        results.push(data.cast[i].name+" ");
+        $('.cast_name').html(results);
+        console.log(results);
+        };
+    },
+    error: function (richiesta, stato, errori) {
+      alert("E' avvenuto un errore. " + errori);
+      }
+    }
+  );
+};
