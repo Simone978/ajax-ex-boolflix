@@ -32,9 +32,10 @@ $(document).ready(function(){
   $(document).on('click', '.cast', function(){
     var element =$(this);
     var valoreId=$(this).prev().html();
-    var results =[];
-    cast(valoreId, results, element);
-
+    var resultsCast =[];
+    var resultsGenre =[];
+    cast(valoreId, resultsCast, element);
+    genre(valoreId, resultsGenre, element);
   });
 });
 
@@ -171,9 +172,39 @@ function cast(val, results, element){
     success: function (data) {
      for (var i = 0; i < 5; i++) {
         results.push(data.cast[i].name+" ");
-        element.html(results);
         console.log(results);
         };
+        if(element.siblings('.cast_name').children().length == 0){
+          element.siblings('.cast_name').append("<h3>Cast</h3>"+results);
+          console.log('è vuoto');
+        }
+        console.log(element.siblings('.cast_name h3').length);
+        // element.siblings('.cast_name h3')
+    },
+    error: function (richiesta, stato, errori) {
+      alert("E' avvenuto un errore. " + errori);
+      }
+    }
+  );
+};
+
+function genre(val, results, element){
+  $.ajax(
+    {
+    url: "https://api.themoviedb.org/3/movie/"+val+"",
+    method: "GET",
+    data: {
+          api_key: "07e3257a7ad00294a8c003683909f65c",
+        },
+    success: function (data) {
+      // console.log(data.genres[0]);
+      console.log(data.genres.length);
+     for (var i = 0; i < data.genres.length; i++) {
+        results.push(data.genres[i].name);
+        };
+        if(element.siblings('.genre').children().length == 0){
+      element.siblings('.genre').append("<h3>Genere</h3>"+results);
+      }
     },
     error: function (richiesta, stato, errori) {
       alert("E' avvenuto un errore. " + errori);
