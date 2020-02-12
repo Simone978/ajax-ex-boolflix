@@ -30,9 +30,10 @@ $(document).ready(function(){
   });
 
   $(document).on('click', '.cast', function(){
+    var element =$(this);
     var valoreId=$(this).prev().html();
     var results =[];
-    cast(valoreId, results);
+    cast(valoreId, results, element);
 
   });
 });
@@ -159,7 +160,7 @@ function print(type, dati){
   }
 };
 
-function cast(val, results){
+function cast(val, results, element){
   $.ajax(
     {
     url: "https://api.themoviedb.org/3/movie/"+val+"/credits",
@@ -170,7 +171,7 @@ function cast(val, results){
     success: function (data) {
      for (var i = 0; i < 5; i++) {
         results.push(data.cast[i].name+" ");
-        $('.cast_name').html(results);
+        element.html(results);
         console.log(results);
         };
     },
